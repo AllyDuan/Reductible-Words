@@ -2,7 +2,7 @@
 Student information for this assignment:
 
 Replace <FULL NAME> with your name.
-On my/our honor, Ally Duan and <FULL NAME>, this
+On my/our honor, Ally Duan and Melinda Li, this
 programming assignment is my own work and I have not provided this code to
 any other student.
 
@@ -13,7 +13,7 @@ code to someone else), the case shall be submitted to the Office of the Dean of
 Students. Academic penalties up to and including an F in the course are likely.
 
 UT EID 1: amd6894
-UT EID 2:
+UT EID 2: mjl4363
 """
 
 # the constant used to calculate the step size
@@ -57,7 +57,6 @@ def hash_word(s, size):
 
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def step_size(s):
     """
     Calculates step size for double hashing using STEP_SIZE_CONSTANT.
@@ -65,7 +64,7 @@ def step_size(s):
     pre: s is a lowercase string.
     post: Returns the calculated step size as an integer based on the provided string.
     """
-    key_value = hash_word(s, len(s) + 1)
+    key_value = hash_word(s, STEP_SIZE_CONSTANT)
     step = STEP_SIZE_CONSTANT - (key_value % STEP_SIZE_CONSTANT)
     # Prevent 0 being a step size
     if step == 0:
@@ -73,7 +72,6 @@ def step_size(s):
     return step
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def insert_word(s, hash_table):
     """
     Inserts a string into the hash table using double hashing for collision resolution.
@@ -86,25 +84,25 @@ def insert_word(s, hash_table):
     key_value = hash_word(s, len(hash_table))
     index = key_value % len(hash_table)
 
+    if s in hash_table:
+        return
+
+    # no need to do second step
+    if hash_table[index] == '':
+        hash_table[index] = s
+        return
+
+    # know need to keep stepping
     current = index
-    first_loop = True
+    next_index = (current + STEP_SIZE_CONSTANT) % len(hash_table)
 
-    while hash_table[current] is not None:
-        # do nothing if key value is in hash table so no duplicates
-        if hash_table[current] == key_value:
-            return
-        current = (current + step_size(s)) % len(hash_table)
-        # if comes back to same original index after it wraps around
-        if current == index and first_loop is False:
-            break
+    while hash_table[next_index] != '':
+        current = next_index
+        next_index = (current + STEP_SIZE_CONSTANT) % len(hash_table)
 
-        first_loop = False
-
-    if hash_table[current] is None:
-        hash_table[current] = key_value
+    hash_table[next_index] = s
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def find_word(s, hash_table):
     """
     Searches for a string in the hash table.
@@ -114,6 +112,21 @@ def find_word(s, hash_table):
     pre: s is a string, and hash_table is a list representing the hash table.
     post: Returns True if s is found in hash_table, otherwise returns False.
     """
+    key_value = hash_word(s, len(hash_table))
+    index = key_value % len(hash_table)
+
+    if hash_table[index] == s:
+        return True
+
+    current = index
+    next_index = (current + STEP_SIZE_CONSTANT) % len(hash_table)
+
+    while index != next_index:
+        current = next_index
+        next_index = (current + STEP_SIZE_CONSTANT) % len(hash_table)
+        if hash_table[next_index] == s:
+            return True
+    return False
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
@@ -127,6 +140,7 @@ def is_reducible(s, hash_table, hash_memo):
     post: Returns True if s is reducible (also updates hash_memo by
           inserting s if reducible), otherwise returns False.
     """
+    
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
