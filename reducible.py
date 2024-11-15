@@ -57,6 +57,7 @@ def hash_word(s, size):
 
 
 
+# TODO: Modify this function. You may delete this comment when you are done.
 def step_size(s):
     """
     Calculates step size for double hashing using STEP_SIZE_CONSTANT.
@@ -68,10 +69,11 @@ def step_size(s):
     step = STEP_SIZE_CONSTANT - (key_value % STEP_SIZE_CONSTANT)
     # Prevent 0 being a step size
     if step == 0:
-        step = 1
+        step = STEP_SIZE_CONSTANT
     return step
 
 
+# TODO: Modify this function. You may delete this comment when you are done.
 def insert_word(s, hash_table):
     """
     Inserts a string into the hash table using double hashing for collision resolution.
@@ -102,7 +104,7 @@ def insert_word(s, hash_table):
 
     hash_table[next_index] = s
 
-
+# TODO: Modify this function. You may delete this comment when you are done.
 def find_word(s, hash_table):
     """
     Searches for a string in the hash table.
@@ -128,7 +130,6 @@ def find_word(s, hash_table):
             return True
     return False
 
-
 # TODO: Modify this function. You may delete this comment when you are done.
 def is_reducible(s, hash_table, hash_memo):
     """
@@ -140,7 +141,23 @@ def is_reducible(s, hash_table, hash_memo):
     post: Returns True if s is reducible (also updates hash_memo by
           inserting s if reducible), otherwise returns False.
     """
-    
+    if find_word(s, hash_table):
+        # idk how to make it check the index of hash_memo
+        hash_memo[s] = True
+        return True
+  
+    if len(s) == 1:
+        if s == "i" or s == "o" or s == "a":
+            return True
+        return False
+
+    # this code below was lowk chat i cant lie i cant think rn
+    for i in range(len(s)):
+        reduced_s = s[:i] + s[i+1:]
+        if is_reducible(reduced_s, hash_table, hash_memo):
+            hash_memo[s] = True
+            return True
+        return False
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
