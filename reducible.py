@@ -83,11 +83,10 @@ def insert_word(s, hash_table):
     if hash_table[index] == s:
         return
 
-    while hash_table[index] != "": 
-        if hash_table[index] == s: 
+    while hash_table[index] != "":
+        if hash_table[index] == s:
             return 
         index = (index + step_size(s)) % len(hash_table)
-    
     hash_table[index] = s
 
 
@@ -177,10 +176,10 @@ def main():
     # where each line read from input()
     # should be a single word. Append to word_list
     # ensure each word has no trailing white space.
-    try: 
-        while True: 
+    try:
+        while True:
             word_list.append(input().strip())
-    except EOFError: 
+    except EOFError:
         pass
 
     # find length of word_list
