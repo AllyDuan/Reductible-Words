@@ -140,7 +140,25 @@ def is_reducible(s, hash_table, hash_memo):
     post: Returns True if s is reducible (also updates hash_memo by
           inserting s if reducible), otherwise returns False.
     """
-    
+    if len(s) == 1:
+        if s == "i" or s == "o" or s == "a":
+            insert_word(s, hash_memo)
+            return True
+        return False
+
+    if find_word(s, hash_memo):
+        return True
+
+    if find_word(s, hash_table):
+        insert_word(s, hash_memo)
+        return True
+
+    for i in range(len(s)):
+        reduced_s = s[:i] + s[i+1:]
+        if is_reducible(reduced_s, hash_table, hash_memo):
+            insert_word(s, hash_memo)
+            return True
+    return False
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
