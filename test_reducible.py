@@ -352,6 +352,7 @@ class TestIsReducible(unittest.TestCase):
 
     def test_is_reducible_8(self):
         """Test is_reducible with only single-letter words and some reducible words"""
+        print("\n\n\n test 8")
         word_list = ["i", "o", "loop", "cook", "site"]
         m = 37
         hash_list = ["", "", "o", "loop", "", "site", "", "", "", "i", "", "cook", ""]
