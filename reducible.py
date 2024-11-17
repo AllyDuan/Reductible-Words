@@ -66,9 +66,6 @@ def step_size(s):
     """
     key_value = hash_word(s, STEP_SIZE_CONSTANT)
     step = STEP_SIZE_CONSTANT - (key_value % STEP_SIZE_CONSTANT)
-    # # Prevent 0 being a step size
-    # if step == 0:
-    #     step = 1
     return step
 
 
@@ -81,26 +78,18 @@ def insert_word(s, hash_table):
     post: Inserts s into hash_table at the correct index; resolves any collisions
           by double hashing.
     """
-    key_value = hash_word(s, len(hash_table))
-    index = key_value % len(hash_table)
+    index = hash_word(s, len(hash_table))
 
-    if s in hash_table:
+    if hash_table[index] == s:
         return
 
-    # no need to do second step
-    if hash_table[index] == '':
-        hash_table[index] = s
-        return
+    while hash_table[index] != "": 
+        if hash_table[index] == s: 
+            return 
+        index = (index + step_size(s)) % len(hash_table)
+    
+    hash_table[index] = s
 
-    # know need to keep stepping
-    current = index
-    next_index = (current + STEP_SIZE_CONSTANT) % len(hash_table)
-
-    while hash_table[next_index] != '':
-        current = next_index
-        next_index = (current + STEP_SIZE_CONSTANT) % len(hash_table)
-
-    hash_table[next_index] = s
 
 
 def find_word(s, hash_table):
