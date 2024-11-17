@@ -66,9 +66,9 @@ def step_size(s):
     """
     key_value = hash_word(s, STEP_SIZE_CONSTANT)
     step = STEP_SIZE_CONSTANT - (key_value % STEP_SIZE_CONSTANT)
-    # Prevent 0 being a step size
-    if step == 0:
-        step = 1
+    # # Prevent 0 being a step size
+    # if step == 0:
+    #     step = 1
     return step
 
 
@@ -188,7 +188,11 @@ def main():
     # where each line read from input()
     # should be a single word. Append to word_list
     # ensure each word has no trailing white space.
-    word_list.append(input().strip())
+    try: 
+        while True: 
+            word_list.append(input().strip())
+    except EOFError: 
+        pass
 
     # find length of word_list
     length = len(word_list)
@@ -216,7 +220,7 @@ def main():
     # let us assume it is 10 percent (fairly safe) of the words
     # then M is a prime number that is slightly greater than
     # 0.2 * size of word_list
-    m = 0.2 * length
+    m = int(0.2 * length)
     while not is_prime(m):
         m += 1
     hash_memo = []
