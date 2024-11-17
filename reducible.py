@@ -85,7 +85,7 @@ def insert_word(s, hash_table):
 
     while hash_table[index] != "":
         if hash_table[index] == s:
-            return 
+            return
         index = (index + step_size(s)) % len(hash_table)
     hash_table[index] = s
 
