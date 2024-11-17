@@ -135,7 +135,7 @@ def is_reducible(s, hash_table, hash_memo):
           inserting s if reducible), otherwise returns False.
     """
     if len(s) == 1:
-        if s == "i" or s == "o" or s == "a":
+        if s in ("i", "o", "a"):
             return True
         return False
 
@@ -179,7 +179,6 @@ def get_longest_words(string_list):
     return longest_word_lst
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def main():
     """The main function that calculates the longest reducible words"""
     # create an empty word_list
@@ -204,7 +203,7 @@ def main():
     hash_list = []
 
     # populate the hash_list with N blank strings
-    for _ in n:
+    for _ in range(n):
         hash_list.append("")
 
     # hash each word in word_list into hash_list
@@ -223,7 +222,7 @@ def main():
     hash_memo = []
 
     # populate the hash_memo with M blank strings
-    for _ in m:
+    for _ in range(m):
         hash_memo.append("")
 
     # create an empty list reducible_words
@@ -239,7 +238,6 @@ def main():
         if is_reducible(word, hash_list, hash_memo):
             reducible_words.append(word)
             insert_word(word, hash_memo)
-            break
 
     # find the largest reducible words in reducible_words
     largest = get_longest_words(reducible_words)
@@ -249,7 +247,6 @@ def main():
     sorted_list = sorted(largest)
     for a in sorted_list:
         print(a)
-        print("\n")
 
 
 if __name__ == "__main__":
